@@ -1,16 +1,38 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
+// Cargar variables de entorno desde el archivo .env
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$host = $_ENV['DB_HOST'] ?? 'localhost';
-$port = $_ENV['DB_PORT'] ?? '3306';
-$user = $_ENV['DB_USER'] ?? 'root';
-$password = $_ENV['DB_PASSWORD'] ?? '';
-$database = $_ENV['DB_DATABASE'] ?? '';
+class Database {
+    private $host;
+    private $port;
+    private $user;
+    private $password;
+    private $database;
 
-$connection = new mysqli($host, $user, $password, $database, $port);
-if ($connection->connect_error) {
-    die("Conexión fallida: " . $connection->connect_error);
+    public function __construct() {
+        $this->host = $_ENV['DB_HOST'] ?? 'localhost';
+        $this->port = $_ENV['DB_PORT'] ?? '3306';
+        $this->user = $_ENV['DB_USERNAME'] ?? 'root';
+        $this->password = $_ENV['DB_PASSWORD'] ?? '';
+        $this->database = $_ENV['DB_DATABASE'] ?? '';
+    }
+
+    public function getConnection() {
+        $hostDB = "mysql:host={$this->host};port={$this->port};dbname={$this->database}";
+        
+        try {
+            $connection = new PDO($hostDB, $this->user, $this->password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            http_response_code(200);
+            echo json_encode(['message' => 'Conexión a la base de datos exitosa']);
+            return $connection;
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Error de conexión a la base de datos: ' . $e->getMessage()]);
+            exit;
+        }
+    }
 }
