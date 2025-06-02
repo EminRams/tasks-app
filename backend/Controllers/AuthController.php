@@ -39,6 +39,7 @@ class AuthController {
         }
 
         try {
+            // Verificar si el correo ya existe
             $statement = $this->db->prepare("SELECT id FROM users WHERE email = ?");
             $statement->execute([$email]);
             if ($statement->fetch()) {
@@ -79,12 +80,13 @@ class AuthController {
             return;
         }
 
+        // Recuperar usuario e iniciar sesión
         try {
-            // Validar si el usuario existe y la contraseña es correcta
             $statement = $this->db->prepare("SELECT id, password FROM users WHERE email = ?");
             $statement->execute([$email]);
             $user = $statement->fetch(PDO::FETCH_ASSOC);
-
+            
+            // Validar si el usuario existe y la contraseña es correcta
             if (!$user || !password_verify($password, $user['password'])) {
                 http_response_code(401);
                 echo json_encode(['error' => 'Credenciales invalidas.']);
