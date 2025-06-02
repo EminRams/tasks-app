@@ -42,7 +42,8 @@ class AuthController
 
         try {
             // Verificar si el correo ya existe
-            $statement = $this->db->prepare("SELECT id FROM users WHERE email = ?");
+            // $statement = $this->db->prepare("SELECT id FROM users WHERE email = ?");
+            $statement = $this->db->prepare("CALL sp_get_user_by_email(?)");
             $statement->execute([$email]);
             if ($statement->fetch()) {
                 http_response_code(409);
@@ -52,7 +53,7 @@ class AuthController
 
             // Crear usuario
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-            $statement = $this->db->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+            $statement = $this->db->prepare("CALL sp_insert_user(?, ?, ?)");
             $statement->execute([$username, $email, $hashedPassword]);
 
             http_response_code(201);
@@ -85,7 +86,7 @@ class AuthController
 
         // Recuperar usuario e iniciar sesión
         try {
-            $statement = $this->db->prepare("SELECT id, password FROM users WHERE email = ?");
+            $statement = $this->db->prepare("CALL sp_get_user_by_email(?)");
             $statement->execute([$email]);
             $user = $statement->fetch(PDO::FETCH_ASSOC);
 

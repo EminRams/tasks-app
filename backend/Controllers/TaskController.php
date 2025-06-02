@@ -26,7 +26,7 @@ class TaskController
 
         // Obtener las tareas del usuario
         try {
-            $statement = $this->db->prepare("SELECT * FROM tasks WHERE user_id = ?");
+            $statement = $this->db->prepare("CALL sp_get_tasks_by_user(?)");
             $statement->execute([$_SESSION['user_id']]);
             $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -55,7 +55,7 @@ class TaskController
 
         // Insertar la tarea en la base de datos
         try {
-            $statement = $this->db->prepare("INSERT INTO tasks (user_id, title, description, due_date) VALUES (?, ?, ?, ?)");
+            $statement = $this->db->prepare("CALL sp_insert_task(?, ?, ?, ?)");
             $statement->execute([$_SESSION['user_id'], $title, $description, $dueDate]);
 
             http_response_code(201);
@@ -79,9 +79,19 @@ class TaskController
             return;
         }
 
-        // Eliminar la tarea en la base de datos
         try {
-            $statement = $this->db->prepare('DELETE FROM tasks WHERE id = ? AND user_id = ?');
+            // Validar que la tarea exista y pertenezca al usuario
+            $statement = $this->db->prepare("CALL sp_get_task_by_id(?, ?)");
+            $statement->execute([$id, $_SESSION['user_id']]);
+            
+            if(!$statement->fetch(PDO::FETCH_ASSOC)) {
+                http_response_code(500);
+                echo json_encode(['error'=> 'Tarea no encontrada.']);
+                return;
+            }
+
+            // Eliminar la tarea en la base de datos
+            $statement = $this->db->prepare('CALL sp_delete_task(?, ?)');
             $statement->execute([$id, $_SESSION['user_id']]);
 
             http_response_code(201);
