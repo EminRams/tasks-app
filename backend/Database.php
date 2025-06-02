@@ -1,9 +1,15 @@
 <?php
+
 require_once __DIR__ . '/vendor/autoload.php';
 
+use PDO;
+use PDOException;
+use Dotenv\Dotenv;
+
 // Cargar variables de entorno desde el archivo .env
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
+
 
 class Database {
     private $host;
@@ -26,8 +32,6 @@ class Database {
         try {
             $connection = new PDO($hostDB, $this->user, $this->password);
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            http_response_code(200);
-            echo json_encode(['message' => 'Conexión a la base de datos exitosa']);
             return $connection;
         } catch (PDOException $e) {
             http_response_code(500);
