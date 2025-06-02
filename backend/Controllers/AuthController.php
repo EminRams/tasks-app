@@ -2,7 +2,8 @@
 
 require_once __DIR__ . '/../Database.php';
 
-class AuthController {
+class AuthController
+{
     private $db;
 
     public function __construct()
@@ -11,7 +12,8 @@ class AuthController {
         $this->db = $database->getConnection();
     }
 
-    public function register($data) {
+    public function register($data)
+    {
         header('Content-Type: application/json');
 
         $username = htmlspecialchars(trim($data['username'] ?? ''));
@@ -61,7 +63,8 @@ class AuthController {
         }
     }
 
-    public function login($data) {
+    public function login($data)
+    {
         header('Content-Type: application/json');
 
         $email = htmlspecialchars(trim($data['email'] ?? ''));
@@ -85,7 +88,7 @@ class AuthController {
             $statement = $this->db->prepare("SELECT id, password FROM users WHERE email = ?");
             $statement->execute([$email]);
             $user = $statement->fetch(PDO::FETCH_ASSOC);
-            
+
             // Validar si el usuario existe y la contraseña es correcta
             if (!$user || !password_verify($password, $user['password'])) {
                 http_response_code(401);
@@ -99,6 +102,24 @@ class AuthController {
 
             http_response_code(200);
             echo json_encode(['message' => 'Inicio de sesión exitoso.', 'user_id' => $user['id']]);
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Error en el servidor: ' . $e->getMessage()]);
+        }
+    }
+
+    public function logout()
+    {
+        header('Content-Type: application/json');
+
+        try {
+            // Cerrar sesión y destruir la sesión
+            session_start();
+            session_unset();
+            session_destroy();
+
+            http_response_code(200);
+            echo json_encode(['message' => 'Sesión cerrada correctamente.']);
         } catch (PDOException $e) {
             http_response_code(500);
             echo json_encode(['error' => 'Error en el servidor: ' . $e->getMessage()]);
