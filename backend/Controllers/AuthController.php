@@ -98,7 +98,7 @@ class AuthController
             $_SESSION['user_id'] = $user['id'];
 
             http_response_code(200);
-            echo json_encode(['message' => 'Inicio de sesión exitoso.', 'user_id' => $user['id']]);
+            echo json_encode(['message' => 'Inicio de sesión exitoso.', 'user' => $user]);
         } catch (PDOException $e) {
             http_response_code(500);
             echo json_encode(['error' => 'Error en el servidor: ' . $e->getMessage()]);
