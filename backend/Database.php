@@ -2,8 +2,6 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use PDO;
-use PDOException;
 use Dotenv\Dotenv;
 
 // Cargar variables de entorno desde el archivo .env
