@@ -22,8 +22,6 @@ class TaskController
 
     public function index()
     {
-        header('Content-Type: application/json');
-
         // Obtener las tareas del usuario
         try {
             $statement = $this->db->prepare("CALL sp_get_tasks_by_user(?)");
@@ -40,8 +38,6 @@ class TaskController
 
     public function create($data)
     {
-        header('Content-Type: application/json');
-
         $title = trim($data['title'] ?? '');
         $description = trim($data['description'] ?? '');
         $dueDate = $data['due_date'] ?? null;
@@ -68,8 +64,6 @@ class TaskController
 
     public function delete($id)
     {
-        header('Content-Type: application/json');
-
         $id = trim($id ?? '');
 
         // Validar ID
@@ -83,10 +77,10 @@ class TaskController
             // Validar que la tarea exista y pertenezca al usuario
             $statement = $this->db->prepare("CALL sp_get_task_by_id(?, ?)");
             $statement->execute([$id, $_SESSION['user_id']]);
-            
-            if(!$statement->fetch(PDO::FETCH_ASSOC)) {
+
+            if (!$statement->fetch(PDO::FETCH_ASSOC)) {
                 http_response_code(500);
-                echo json_encode(['error'=> 'Tarea no encontrada.']);
+                echo json_encode(['error' => 'Tarea no encontrada.']);
                 return;
             }
 

@@ -14,8 +14,6 @@ class AuthController
 
     public function register($data)
     {
-        header('Content-Type: application/json');
-
         $username = htmlspecialchars(trim($data['username'] ?? ''));
         $email = htmlspecialchars(trim($data['email'] ?? ''));
         $password = trim($data['password'] ?? '');
@@ -66,8 +64,6 @@ class AuthController
 
     public function login($data)
     {
-        header('Content-Type: application/json');
-
         $email = htmlspecialchars(trim($data['email'] ?? ''));
         $password = trim($data['password'] ?? '');
 
@@ -111,8 +107,6 @@ class AuthController
 
     public function logout()
     {
-        header('Content-Type: application/json');
-
         try {
             // Cerrar sesión y destruir la sesión
             session_start();
