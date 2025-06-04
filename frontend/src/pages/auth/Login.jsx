@@ -1,6 +1,7 @@
 // src/pages/Login.jsx
 import { useState } from "react";
 import { login } from "../../api/auth";
+import Button from "../../components/Button";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ export default function Login() {
             // Redirigir al usuario a la página principal
             window.location.href = "/";
         } catch (err) {
-            setError(err.message || "Error al iniciar sesión");
+            setError("La plataforma no se encuentra disponible en este momento.");
         }
     };
 
@@ -69,12 +70,10 @@ export default function Login() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                    <button
+                    <Button
                         type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                        Iniciar Sesión
-                    </button>
+                        value="Iniciar Sesión"
+                    />
                 </div>
             </form>
         </div>

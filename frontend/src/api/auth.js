@@ -5,6 +5,7 @@ export const login = async (data) => {
         method: 'POST',
         headers: { Accept: 'application/json', "Content-Type": 'application/json' },
         body: JSON.stringify(data),
+        credentials: 'include',
     });
 
     if (!response.ok) {
@@ -20,6 +21,7 @@ export const register = async (data) => {
         method: 'POST',
         headers: { Accept: 'application/json', "Content-Type": 'application/json' },
         body: JSON.stringify(data),
+        credentials: 'include',
     });
 
     if (!response.ok) {
