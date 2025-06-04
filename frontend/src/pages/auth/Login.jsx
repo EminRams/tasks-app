@@ -1,6 +1,6 @@
 // src/pages/Login.jsx
 import { useState } from "react";
-import { login } from "../api/auth";
+import { login } from "../../api/auth";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -15,9 +15,7 @@ export default function Login() {
             const userData = await login({ email, password });
 
             // Guardar la sesión del usuario
-            localStorage.setItem("user", JSON.stringify(userData));
-
-            console.log("Usuario autenticado:", userData);
+            localStorage.setItem("user", JSON.stringify(userData.user));
 
             // Redirigir al usuario a la página principal
             window.location.href = "/";
@@ -27,7 +25,7 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 transition-colors">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
             <form
                 onSubmit={handleSubmit}
                 className="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md"
