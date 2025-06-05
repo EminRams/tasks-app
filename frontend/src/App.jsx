@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 import Login from './pages/auth/Login';
 import ViewTasks from './pages/tasks/ViewTasks';
 import Layout from "./components/Layout";
-import { useEffect } from "react";
+import { checkSession } from "./api/auth";
 
 const isAuthenticated = () => {
   // Verificar si el usuario está autenticado
@@ -13,14 +14,23 @@ const isAuthenticated = () => {
 
 function App() {
   useEffect(() => {
-    
+
     const darkMode = localStorage.getItem("darkMode");
     if (darkMode === "enabled") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
-    
+
+    // Verificar si el usuario está autenticado al cargar la aplicación
+    checkSession()
+      .then((data) => {
+        localStorage.setItem("user", JSON.stringify(data.user));
+      })
+      .catch(() => {
+        localStorage.removeItem("user");
+      });
+
   }, []);
 
   return (

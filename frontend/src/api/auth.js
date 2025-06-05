@@ -13,7 +13,7 @@ export const login = async (data) => {
         throw new Error(errorData.error || "Error al iniciar sesión");
     }
 
-    return response.json();   
+    return response.json();
 }
 
 export const register = async (data) => {
@@ -49,3 +49,15 @@ export const logout = async () => {
     return response.json();
 }
 
+export const checkSession = async () => {
+    const response = await fetch(`${API_URL}/Auth/CheckSession.php`, {
+        method: "GET",
+        credentials: "include",
+    });
+
+    if (!response.ok) {
+        throw new Error("Sesión no válida");
+    }
+
+    return response.json();
+};
