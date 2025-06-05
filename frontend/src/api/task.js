@@ -15,3 +15,19 @@ export const getTasks = async () => {
 
     return response.json();
 }
+
+export const createTask = async (data) => {
+    const response = await fetch(`${API_URL}/Task/Create.php`, {
+        method: 'POST',
+        headers: { Accept: 'application/json', "Content-Type": 'application/json' },
+        body: JSON.stringify(data),
+        credentials: 'include',
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Error al crear tarea");
+    }
+
+    return response.json();
+}

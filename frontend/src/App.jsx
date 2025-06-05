@@ -4,6 +4,7 @@ import Login from './pages/auth/Login';
 import ViewTasks from './pages/tasks/ViewTasks';
 import Layout from "./components/Layout";
 import { checkSession } from "./api/auth";
+import CreateTasks from "./pages/tasks/CreateTasks";
 
 const isAuthenticated = () => {
   // Verificar si el usuario está autenticado
@@ -40,6 +41,10 @@ function App() {
           <Route
             path='/'
             element={isAuthenticated() ? <ViewTasks /> : <Navigate to="/login" replace />}
+          />
+          <Route
+            path='/create-task'
+            element={isAuthenticated() ? <CreateTasks /> : <Navigate to="/login" replace />}
           />
         </Route>
         <Route

@@ -50,7 +50,7 @@ export default function ViewTasks() {
                             <tr>
                                 <th className="px-4 py-2">Título</th>
                                 <th className="px-4 py-2">Descripción</th>
-                                <th className="px-4 py-2">Fecha de Creación</th>
+                                <th className="px-4 py-2">Fecha Limíte</th>
                                 <th className="px-4 py-2">Acciones</th>
                             </tr>
                         </thead>
