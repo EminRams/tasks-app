@@ -25,9 +25,6 @@ function App() {
 
     // Verificar si el usuario está autenticado al cargar la aplicación
     checkSession()
-      .then((data) => {
-        localStorage.setItem("user", JSON.stringify(data.user));
-      })
       .catch(() => {
         localStorage.removeItem("user");
       });
