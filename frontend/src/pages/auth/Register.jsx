@@ -20,8 +20,12 @@ export default function Login() {
             // Redirigir al inicio de sesion
             window.location.href = "/login";
         } catch (err) {
+            if (err.message === "Failed to fetch") {
+                setError("La plataforma no se encuentra disponible en este momento.");
+                return;
+            }
+
             setError(err.message);
-            console.log(err);
         }
     };
 
