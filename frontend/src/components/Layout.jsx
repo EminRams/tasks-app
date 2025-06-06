@@ -1,12 +1,12 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { logout } from "../api/auth";
 
 export default function Layout() {
     const user = JSON.parse(localStorage.getItem("user"));
-    const [menuOpen, setMenuOpen] = React.useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
 
-    const [darkMode, setDarkMode] = React.useState(() => {
+    const [darkMode, setDarkMode] = useState(() => {
         return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     });
     
@@ -29,7 +29,7 @@ export default function Layout() {
         if (!e.target.closest("#user-menu")) setMenuOpen(false);
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (menuOpen) {
             document.addEventListener("mousedown", handleClickOutside);
         } else {

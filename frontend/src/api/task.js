@@ -31,3 +31,18 @@ export const createTask = async (data) => {
 
     return response.json();
 }
+
+export const deleteTask = async (id) => {
+    const response = await fetch(`${API_URL}/Task/Delete.php?id=${id}`, {
+        method: 'DELETE',
+        headers: { Accept: 'application/json', "Content-Type": 'application/json' },
+        credentials: 'include',
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Error al eliminar tarea");
+    }
+
+    return response.json();
+}
