@@ -1,10 +1,11 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, Router } from "react-router-dom";
 import { useEffect } from "react";
 import Login from './pages/auth/Login';
 import ViewTasks from './pages/tasks/ViewTasks';
 import Layout from "./components/Layout";
 import { checkSession } from "./api/auth";
 import CreateTasks from "./pages/tasks/CreateTasks";
+import Register from "./pages/auth/Register";
 
 const isAuthenticated = () => {
   // Verificar si el usuario está autenticado
@@ -47,6 +48,10 @@ function App() {
         <Route
           path='/login'
           element={!isAuthenticated() ? <Login /> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="/register"
+          element={!isAuthenticated() ? <Register /> : <Navigate to="/" replace />}
         />
       </Routes>
     </BrowserRouter>

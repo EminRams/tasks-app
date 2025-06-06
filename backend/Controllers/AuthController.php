@@ -17,7 +17,7 @@ class AuthController
         $username = htmlspecialchars(trim($data['username'] ?? ''));
         $email = htmlspecialchars(trim($data['email'] ?? ''));
         $password = trim($data['password'] ?? '');
-        $confirmPassword = trim($data['confirm_password'] ?? '');
+        $confirmPassword = trim($data['confirmPassword'] ?? '');
 
         // Validar campos vacios
         if (empty($username) || empty($email) || empty($password) || empty($confirmPassword)) {

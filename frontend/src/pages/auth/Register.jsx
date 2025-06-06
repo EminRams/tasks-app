@@ -1,11 +1,13 @@
 // src/pages/Login.jsx
 import { useState } from "react";
-import { login } from "../../api/auth";
+import { register } from "../../api/auth";
 import Button from "../../components/Button";
 
 export default function Login() {
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
@@ -13,15 +15,13 @@ export default function Login() {
         setError(null);
 
         try {
-            const userData = await login({ email, password });
+            await register({ username, email, password, confirmPassword });
 
-            // Guardar la sesión del usuario
-            localStorage.setItem("user", JSON.stringify(userData.user));
-
-            // Redirigir al usuario a la página principal
-            window.location.href = "/";
+            // Redirigir al inicio de sesion
+            window.location.href = "/login";
         } catch (err) {
-            setError("La plataforma no se encuentra disponible en este momento.");
+            setError(err.message);
+            console.log(err);
         }
     };
 
@@ -32,7 +32,7 @@ export default function Login() {
                 className="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md"
             >
                 <h2 className="text-2xl font-bold text-center mb-4 text-gray-800 dark:text-white">
-                    Iniciar Sesión
+                    Registrarse
                 </h2>
 
                 {error && (
@@ -40,6 +40,19 @@ export default function Login() {
                         {error}
                     </div>
                 )}
+
+                <div className="mb-4">
+                    <label className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" htmlFor="email">
+                        Nombre de Usuario
+                    </label>
+                    <input
+                        id="username"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring focus:border-blue-500"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
 
                 <div className="mb-4">
                     <label className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" htmlFor="email">
@@ -69,13 +82,27 @@ export default function Login() {
                     />
                 </div>
 
+                <div className="mb-6">
+                    <label className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" htmlFor="password">
+                        Confirmar Contraseña
+                    </label>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring focus:border-blue-500"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                </div>
+
                 <div className="flex flex-col justify-between gap-5">
                     <Button
                         type="submit"
-                        value="Iniciar Sesión"
+                        value="Registrarse"
                     />
-                    <a href="/register" className="text-right dark:text-white hover:underline hover:text-blue-500">
-                        ¿No tienes cuenta? Registrate aqui.
+                    <a href="/login" className="text-right dark:text-white hover:underline hover:text-blue-500">
+                        ¿Ya te registraste? Inicia Sesión aquí.
                     </a>
                 </div>
             </form>
