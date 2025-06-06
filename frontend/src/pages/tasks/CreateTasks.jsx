@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createTask } from "../../api/task";
 import Button from "../../components/Button";
-import Notificacion from "../../components/Notificacion";
+import Notification from "../../components/Notification";
 
 export default function CreateTasks() {
     const [title, setTitle] = useState("");
@@ -45,7 +45,9 @@ export default function CreateTasks() {
 
     return (
         <div className="min-h-screen w-full flex flex-col gap-5 items-center py-12 px-4 md:px-12">
-            <Notificacion message={notificationMessage} />
+            <Notification
+                message={notificationMessage}
+            />
 
             <h1 className="text-3xl font-bold">Crear Tarea</h1>
             <form

@@ -1,3 +1,23 @@
+/**
+ * Componente de paginacion y limitacion de resultados para las tablas reutilizable.
+ *
+ * @component
+ * @param {number} props.currentPage - Número de pagina activa.
+ * @param {number} props.totalPages - Total de paginas disponibles.
+ * @param {function} props.onPageChange - Función callback llamada con el nuevo número de página cuando se selecciona una página.
+ * @param {number} props.tasksPerPage - Número actual de tareas mostradas por página.
+ * @param {function} props.onTasksPerPageChange - Función callback llamada cuando se cambia el número de tareas por página.
+ *
+ * @example
+ * <Pagination
+ *   currentPage={1}
+ *   totalPages={5}
+ *   onPageChange={handlePageChange}
+ *   tasksPerPage={10}
+ *   onTasksPerPageChange={handleTasksPerPageChange}
+ * />
+ */
+
 export default function Pagination({
     currentPage,
     totalPages,
@@ -6,7 +26,7 @@ export default function Pagination({
     onTasksPerPageChange,
 }) {
     const tasksPerPageOptions = [5, 10, 20, 50];
-    
+
     return (
         <div className="flex flex-col md:flex-row items-center gap-3 mt-4">
             <div className="flex items-center gap-1 border rounded px-2 py-1 bg-gray-100 dark:bg-gray-900">

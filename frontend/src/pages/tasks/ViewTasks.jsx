@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { deleteTask, getTasks } from "../../api/task";
 import Button from "../../components/Button";
 import Pagination from "../../components/Pagination";
-import Notification from "../../components/Notificacion";
+import Notification from "../../components/Notification";
 
 export default function ViewTasks() {
     const [tasks, setTasks] = useState([]);

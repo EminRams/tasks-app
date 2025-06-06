@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, Navigate, Router } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import Login from './pages/auth/Login';
 import ViewTasks from './pages/tasks/ViewTasks';
