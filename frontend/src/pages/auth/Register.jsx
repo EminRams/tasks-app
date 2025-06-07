@@ -51,6 +51,7 @@ export default function Login() {
                     </label>
                     <input
                         id="username"
+                        type="text"
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring focus:border-blue-500"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
