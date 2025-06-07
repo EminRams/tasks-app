@@ -1,7 +1,0 @@
-{
-    "conventionalCommits.scopes": [
-        "Backend",
-        "Frontend"
-    ],
-    "postman.settings.dotenv-detection-notification-visibility": false
-}
